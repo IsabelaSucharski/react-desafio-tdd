@@ -18,7 +18,7 @@ const DivImage = styled.div`
 
 export const Exchanges = ({ coin }: any) => {
   return (
-    <DivCoin>
+    <DivCoin key={coin.id}>
       <DivImage>
         <Image src={`/${coin.image}`} width={70} height={50} alt="img"></Image>
         <h3>{coin.name}</h3>

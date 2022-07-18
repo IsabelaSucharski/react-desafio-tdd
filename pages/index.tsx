@@ -58,13 +58,24 @@ const Home: NextPage = () => {
       .then(setData);
   }, [index]);
 
+  // useEffect(() => {
+  //   let newData = data.filter(({ name }) => {
+  //     return name.includes(nameFilter);
+  //   });
+  //   setNewData(newData);
+  // }, [nameFilter]);
+
   useEffect(() => {
-    let newData = data.filter(({ name }) => {
-      return name.includes(nameFilter);
-    });
-    setNewData(newData);
-    console.log("oi");
-  }, [nameFilter]);
+    if (data) {
+      setNewData(
+        data.filter((item: any) =>
+          item.name.toLowerCase().includes(nameFilter.toLowerCase())
+        )
+      );
+    } else {
+      setNewData([]);
+    }
+  }, [data, nameFilter]);
 
   return (
     <Container>
@@ -94,12 +105,14 @@ const Home: NextPage = () => {
       </DivButtons>
 
       <DivPesquisa>
-        <span>Filtrar por nome: </span>
-        <input
-          type="text"
-          value={nameFilter}
-          onChange={(e) => setNameFilter(e.target.value)}
-        />
+        <label>
+          Filtrar por nome:
+          <input
+            type="text"
+            value={nameFilter}
+            onChange={(e) => setNameFilter(e.target.value)}
+          />
+        </label>
         {nameFilter && (
           <p>
             Exibindo {newData.length} de {data.length}
@@ -108,16 +121,15 @@ const Home: NextPage = () => {
       </DivPesquisa>
 
       {!newData.length && !data.length && <div>Sem dados</div>}
-
+      {/* 
       {!newData.length &&
         data.map((c) => {
           return <Exchanges coin={c} key={c.id} />;
-        })}
+        })} */}
 
-      {newData &&
-        newData.map((c) => {
-          return <Exchanges coin={c} key={c.id} />;
-        })}
+      {newData.map((c, index) => {
+        return <Exchanges coin={c} key={index} />;
+      })}
     </Container>
   );
 };
