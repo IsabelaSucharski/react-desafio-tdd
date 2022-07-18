@@ -34,4 +34,11 @@ describe("Mostrando página inicial", () => {
 
     expect(screen.queryByText("OKX")).not.toBeInTheDocument();
   });
+
+   test("botao proxima pagina", async () => {
+    render(<Home />);
+
+    const button = screen.getByText("Próxima página");
+    fireEvent.click(button);
+  });
 });
